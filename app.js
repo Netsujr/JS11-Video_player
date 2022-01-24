@@ -29,8 +29,7 @@ function skip() {
 }
 
 function rangeUpdate() {
-  // console.log(this.value);
-  // console.log(this.name);
+ // console.log(this.name);
   video[this.name] = this.value;
 }
 
