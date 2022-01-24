@@ -24,8 +24,23 @@ function updateButton() {
 }
 
 function skip() {
-console.log(this.dataset.skip);
-video.currentTime += parseFloat(this.dataset.skip); //converts a string into a true number
+  console.log(this.dataset.skip);
+  video.currentTime += parseFloat(this.dataset.skip); //converts a string into a true number
+}
+
+function rangeUpdate() {
+  console.log(this.value);
+  console.log(this.name);
+  video[this.name] = this.value;
+}
+
+function handleProgress() {
+  const percent = (video.currentTime / video.duration) * 100;
+  progressBar.style.flexBasis = `${percent}%`;
+};
+
+function scrub(event) {
+  
 }
 
 // hook up the event listeners
@@ -33,5 +48,9 @@ video.currentTime += parseFloat(this.dataset.skip); //converts a string into a t
 video.addEventListener('click', togglePlay);
 video.addEventListener('play', updateButton);
 video.addEventListener('pause', updateButton);
+video.addEventListener('timeupdate', handleProgress);
+
 toggle.addEventListener('click', togglePlay);
 skipButtons.forEach(button => button.addEventListener('click', skip));
+ranges.forEach(range => range.addEventListener('change', rangeUpdate));
+ranges.forEach(range => range.addEventListener('mousemove', rangeUpdate));
