@@ -29,8 +29,8 @@ function skip() {
 }
 
 function rangeUpdate() {
-  console.log(this.value);
-  console.log(this.name);
+  // console.log(this.value);
+  // console.log(this.name);
   video[this.name] = this.value;
 }
 
@@ -40,7 +40,11 @@ function handleProgress() {
 };
 
 function scrub(event) {
-  
+  console.log(event);
+  // offsetX is the property telling me where i clicked along the bar
+  const scrubTime = (event.offsetX / progress.offsetWidth) *  video.duration;
+  console.log(scrubTime);
+  video.currentTime = scrubTime;
 }
 
 // hook up the event listeners
@@ -54,3 +58,5 @@ toggle.addEventListener('click', togglePlay);
 skipButtons.forEach(button => button.addEventListener('click', skip));
 ranges.forEach(range => range.addEventListener('change', rangeUpdate));
 ranges.forEach(range => range.addEventListener('mousemove', rangeUpdate));
+
+progress.addEventListener('click', scrub);
