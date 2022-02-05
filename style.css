@@ -27,6 +27,11 @@ body {
   overflow: hidden;
 }
 
+.fullscreen {
+  font: bold;
+  max-width: 30px !important;
+}
+
 /* This css is only applied when fullscreen is active. */
 .player:fullscreen {
   max-width: none;

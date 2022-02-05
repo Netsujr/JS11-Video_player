@@ -7,6 +7,7 @@ const progressBar = player.querySelector('.progress__filled');
 const toggle = player.querySelector('.toggle');
 const skipButtons = player.querySelectorAll('[data-skip]');
 const ranges = player.querySelectorAll('.player__slider');
+const fullscreen = player.querySelector('.fullscreen');
 
 // build functions
 
@@ -29,7 +30,7 @@ function skip() {
 }
 
 function rangeUpdate() {
- // console.log(this.name);
+  // console.log(this.name);
   video[this.name] = this.value;
 }
 
@@ -41,9 +42,22 @@ function handleProgress() {
 function scrub(event) {
   console.log(event);
   // offsetX is the property telling me where i clicked along the bar
-  const scrubTime = (event.offsetX / progress.offsetWidth) *  video.duration;
+  const scrubTime = (event.offsetX / progress.offsetWidth) * video.duration;
   console.log(scrubTime);
   video.currentTime = scrubTime;
+}
+
+function toggleFullscreen() {
+  console.log('click');
+  if (video.requestFullscreen) {
+    video.requestFullscreen();
+  } else if (video.mozRequestFullScreen) {
+    video.mozRequestFullScreen();
+  } else if (video.webkitRequestFullscreen) {
+    video.webkitRequestFullscreen();
+  } else if (video.msRequestFullscreen) {
+    video.msRequestFullscreen();
+  }
 }
 
 // hook up the event listeners
@@ -58,11 +72,12 @@ skipButtons.forEach(button => button.addEventListener('click', skip));
 ranges.forEach(range => range.addEventListener('change', rangeUpdate));
 ranges.forEach(range => range.addEventListener('mousemove', rangeUpdate));
 
+
 let mousedown = false;
 progress.addEventListener('click', scrub);
 
 progress.addEventListener('mousemove', (event) => {
-  if(mousedown) {
+  if (mousedown) {
     scrub(event);
     // progress.addEventListener('mousemove', (event) => mousedown && scrub(event);
     // can also be written like this, is mouse down is true, will go to next condition
@@ -71,3 +86,5 @@ progress.addEventListener('mousemove', (event) => {
 
 progress.addEventListener('mousedown', () => mousedown = true);
 progress.addEventListener('mouseup', () => mousedown = false);
+fullscreen.addEventListener('click', toggleFullscreen);
+video.addEventListener('dblclick', toggleFullscreen);
